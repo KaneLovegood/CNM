@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; display:flex; align-items:center; justify-content:center; height:100vh; background:#f7f7f7; }
+        .card { background:#fff; padding:24px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:320px; }
+        input[type="password"], input[type="text"]{ width:100%; padding:8px; margin-top:8px; margin-bottom:12px; }
+        button{ width:100%; padding:8px; }
+        .msg{ margin-top:12px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Đăng nhập</h2>
+        <form id="loginForm" action="/login" method="POST">
+            <label for="username">Tên đăng nhập là admin:</label>
+            <input id="username" name="username" type="text" autocomplete="off" required />
+            <label for="password">Mật khẩu là 123:</label>
+            <input id="password" name="password" type="password" autocomplete="off" required />
+            <button type="submit">Đăng nhập</button>
+        </form>
+        <div class="msg" id="msg">
+            <% if (error) { %>
+                <div style="color:red">Tên đăng nhập hoặc mật khẩu không đúng.</div>
+            <% } %>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#666">Ghi chú: username = <strong>admin</strong>, password = <strong>123</strong></div>
+    </div>
+</body>
+</html>
