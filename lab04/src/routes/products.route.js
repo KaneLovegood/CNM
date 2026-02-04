@@ -73,6 +73,48 @@ router.post("/add", requireLogin, requireAdmin, upload.single("image"), async (r
   res.redirect("/products");
 });
 
-// Form edit + xử lý edit, soft delete tương tự
+// Form edit
+router.get("/edit/:id", requireLogin, requireAdmin, async (req, res) => {
+  const product = await productService.getById(req.params.id);
+  const categories = await categoryService.getAll();
+  res.render("products/edit", { product, categories });
+});
+
+// Xử lý edit
+router.post("/edit/:id", requireLogin, requireAdmin, upload.single("image"), async (req, res) => {
+  const { name, price, quantity, categoryId } = req.body;
+  let imageUrl = req.body.oldImage || "";
+
+  if (req.file) {
+    const uploadParams = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: `${Date.now()}-${req.file.originalname}`,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+    };
+    const result = await s3.upload(uploadParams).promise();
+    imageUrl = result.Location;
+  }
+
+  await productService.update(
+    req.params.id,
+    {
+      name,
+      price: Number(price),
+      quantity: Number(quantity),
+      categoryId,
+      url_image: imageUrl,
+    },
+    req.session.user.userId
+  );
+
+  res.redirect("/products");
+});
+
+// Soft delete
+router.get("/delete/:id", requireLogin, requireAdmin, async (req, res) => {
+  await productService.softDelete(req.params.id, req.session.user.userId);
+  res.redirect("/products");
+});
 
 module.exports = router;

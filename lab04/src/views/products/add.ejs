@@ -43,7 +43,8 @@
     }
     input[type="text"],
     input[type="number"],
-    input[type="file"] {
+    input[type="file"],
+    select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ddd;
@@ -84,7 +85,7 @@
 <body>
   <div class="container">
     <h1>Thêm sản phẩm</h1>
-    <form action="/add" method="post" enctype="multipart/form-data">
+    <form action="/products/add" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="name">Tên sản phẩm:</label>
         <input type="text" id="name" name="name" required>
@@ -98,12 +99,23 @@
         <input type="number" id="quantity" name="quantity" required>
       </div>
       <div class="form-group">
+        <label for="categoryId">Danh mục:</label>
+        <select id="categoryId" name="categoryId" required>
+          <option value="">-- Chọn danh mục --</option>
+          <% if (categories && categories.length > 0) { %>
+            <% categories.forEach(c => { %>
+              <option value="<%= c.id %>"><%= c.name %></option>
+            <% }) %>
+          <% } %>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="image">Ảnh sản phẩm:</label>
         <input type="file" id="image" name="image" accept="image/*">
       </div>
       <button type="submit">Thêm sản phẩm</button>
     </form>
-    <a href="/" class="back-link">← Quay lại danh sách</a>
+    <a href="/products" class="back-link">← Quay lại danh sách</a>
   </div>
 </body>
 </html>

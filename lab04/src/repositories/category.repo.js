@@ -13,7 +13,7 @@ async function getAll() {
 // Lấy 1 category theo id
 async function getById(categoryId) {
   const data = await dynamodb
-    .get({ TableName: TABLE, Key: { categoryId } })
+    .get({ TableName: TABLE, Key: { id: categoryId } })
     .promise();
   return data.Item;
 }
@@ -21,11 +21,16 @@ async function getById(categoryId) {
 // Tạo category mới
 async function createCategory({ name, description }) {
   const item = {
-    categoryId: uuidv4(),
+    id: uuidv4(),  // Table Categories dùng 'id' làm primary key
     name,
     description,
     createdAt: new Date().toISOString(),
   };
+  
+  // Debug: log item trước khi put
+  console.log("Creating category with item:", JSON.stringify(item, null, 2));
+  console.log("Table name:", TABLE);
+  
   await dynamodb.put({ TableName: TABLE, Item: item }).promise();
   return item;
 }
@@ -33,6 +38,9 @@ async function createCategory({ name, description }) {
 // Cập nhật category (cách dễ: get rồi put lại)
 async function updateCategory(categoryId, { name, description }) {
   const current = await getById(categoryId);
+  if (!current) {
+    throw new Error(`Category with id ${categoryId} not found`);
+  }
   const newItem = { ...current, name, description };
   await dynamodb.put({ TableName: TABLE, Item: newItem }).promise();
   return newItem;
@@ -41,7 +49,7 @@ async function updateCategory(categoryId, { name, description }) {
 // Xoá category
 async function deleteCategory(categoryId) {
   await dynamodb
-    .delete({ TableName: TABLE, Key: { categoryId } })
+    .delete({ TableName: TABLE, Key: { id: categoryId } })
     .promise();
 }
 

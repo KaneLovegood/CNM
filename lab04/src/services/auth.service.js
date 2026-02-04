@@ -10,7 +10,7 @@ async function login(username, password) {
   if (!ok) return null;
 
   return {
-    userId: user.userId,
+    userId: user.id,  // Dùng id vì table Users dùng 'id' làm primary key
     username: user.username,
     role: user.role,
   };

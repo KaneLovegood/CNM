@@ -1,6 +1,5 @@
 // src/services/product.service.js
 const productRepo = require("../repositories/product.repo");
-const logService = require("./log.service");
 
 function buildStatus(quantity) {
   if (quantity === 0) return { text: "Hết hàng", color: "red" };
@@ -44,19 +43,20 @@ async function list({ categoryId, minPrice, maxPrice, keyword, page = 1, limit =
 
 async function create(data, userId) {
   const product = await productRepo.createProduct(data);
-  await logService.logProduct(product.id, "CREATE", userId);
   return product;
 }
 
 async function update(id, data, userId) {
   const product = await productRepo.updateProduct(id, data);
-  await logService.logProduct(id, "UPDATE", userId);
   return product;
 }
 
 async function softDelete(id, userId) {
   await productRepo.softDeleteProduct(id);
-  await logService.logProduct(id, "DELETE", userId);
+}
+
+async function getById(id) {
+  return await productRepo.getById(id);
 }
 
 module.exports = {
@@ -64,4 +64,5 @@ module.exports = {
   create,
   update,
   softDelete,
+  getById,
 };

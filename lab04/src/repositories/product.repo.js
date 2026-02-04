@@ -10,6 +10,16 @@ async function createProduct(data) {
     isDeleted: false,
     createdAt: new Date().toISOString(),
   };
+  
+  // Đảm bảo id không bị override bởi data
+  if (!item.id) {
+    item.id = uuidv4();
+  }
+  
+  // Debug: log item trước khi put
+  console.log("Creating product with item:", JSON.stringify(item, null, 2));
+  console.log("Table name:", TABLE);
+  
   await dynamodb.put({ TableName: TABLE, Item: item }).promise();
   return item;
 }
@@ -17,6 +27,9 @@ async function createProduct(data) {
 async function updateProduct(id, updates) {
   // để code đơn giản, bạn có thể get trước -> merge -> put lại
   const current = await getById(id);
+  if (!current) {
+    throw new Error(`Product with id ${id} not found`);
+  }
   const newItem = { ...current, ...updates };
   await dynamodb.put({ TableName: TABLE, Item: newItem }).promise();
   return newItem;
@@ -24,6 +37,9 @@ async function updateProduct(id, updates) {
 
 async function softDeleteProduct(id) {
   const product = await getById(id);
+  if (!product) {
+    throw new Error(`Product with id ${id} not found`);
+  }
   product.isDeleted = true;
   await dynamodb.put({ TableName: TABLE, Item: product }).promise();
 }
