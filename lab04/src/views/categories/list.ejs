@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách danh mục</title>
+</head>
+<body>
+  <h1>Danh sách danh mục</h1>
+
+  <a href="/categories/add">Thêm danh mục</a>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% categories.forEach(c => { %>
+        <tr>
+          <td><%= c.name %></td>
+          <td><%= c.description %></td>
+          <td>
+            <a href="/categories/edit/<%= c.categoryId %>">Sửa</a>
+            <form action="/categories/delete/<%= c.categoryId %>" method="post" style="display:inline">
+              <button type="submit" onclick="return confirm('Xoá?')">Xoá</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

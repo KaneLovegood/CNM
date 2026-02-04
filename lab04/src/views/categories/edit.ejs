@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sửa danh mục</title>
+</head>
+<body>
+  <h1>Sửa danh mục</h1>
+  <form method="post" action="/categories/edit/<%= category.categoryId %>">
+    <div>
+      <label>Tên danh mục:</label>
+      <input type="text" name="name" value="<%= category.name %>" required>
+    </div>
+    <div>
+      <label>Mô tả:</label>
+      <textarea name="description"><%= category.description %></textarea>
+    </div>
+    <button type="submit">Cập nhật</button>
+  </form>
+
+  <a href="/categories">Quay lại danh sách</a>
+</body>
+</html>

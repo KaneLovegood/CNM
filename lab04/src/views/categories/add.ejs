@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm danh mục</title>
+</head>
+<body>
+  <h1>Thêm danh mục</h1>
+  <form method="post" action="/categories/add">
+    <div>
+      <label>Tên danh mục:</label>
+      <input type="text" name="name" required>
+    </div>
+    <div>
+      <label>Mô tả:</label>
+      <textarea name="description"></textarea>
+    </div>
+    <button type="submit">Lưu</button>
+  </form>
+
+  <a href="/categories">Quay lại danh sách</a>
+</body>
+</html>
