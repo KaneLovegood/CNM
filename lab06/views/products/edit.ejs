@@ -1,0 +1,12 @@
+<%- include('../partials/header', { pageTitle }) %>
+
+<h1 class="h3 mb-4">Cập nhật sản phẩm</h1>
+<%- include('form', {
+  action: '/products/' + product.id,
+  method: 'POST',
+  submitText: 'Cập nhật',
+  product,
+  errors
+}) %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,102 @@
+:root {
+  --bg-soft: #f8fafc;
+  --bg-accent: #f1f5f9;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --brand: #3b82f6;
+  --brand-dark: #2563eb;
+}
+
+body {
+  font-family: "Be Vietnam Pro", sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  background: var(--bg-soft);
+  position: relative;
+}
+
+.background-layer {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.08), transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.app-navbar {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.5px;
+  color: var(--brand);
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: #eff6ff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+}
+
+.hero-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  margin-bottom: 0.4rem;
+}
+
+.hero-subtitle {
+  opacity: 0.92;
+}
+
+.btn-accent {
+  background-color: var(--brand);
+  border-color: var(--brand);
+  color: #f8fafc;
+}
+
+.btn-accent:hover {
+  background-color: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: #f8fafc;
+}
+
+.product-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid #dbe7f3;
+}
+
+.placeholder-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.detail-image {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid #d9e4ee;
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.9rem 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .hero-card {
+    border-radius: 16px;
+  }
+}

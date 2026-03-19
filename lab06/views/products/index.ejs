@@ -1,0 +1,82 @@
+<%- include('../partials/header', { pageTitle }) %>
+
+<section class="hero-card mb-4">
+  <div>
+    <h1 class="hero-title">Danh sách sản phẩm</h1>
+  </div>
+</section>
+
+<form method="GET" action="/" class="card shadow-sm border-0 mb-4">
+  <div class="card-body row g-3 align-items-end">
+    <div class="col-md-9">
+      <label for="search" class="form-label">Tìm kiếm tên sản phẩm</label>
+      <input
+        id="search"
+        name="search"
+        type="text"
+        class="form-control"
+        placeholder="Nhập tên sản phẩm..."
+        value="<%= search %>"
+      />
+    </div>
+    <div class="col-md-3 d-grid">
+      <button class="btn btn-primary">Tìm kiếm</button>
+    </div>
+  </div>
+</form>
+
+<div class="card shadow-sm border-0">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Hình ảnh</th>
+          <th>Tên</th>
+          <th>Giá</th>
+          <th>Tồn kho</th>
+          <th class="text-end">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (products.length === 0) { %>
+        <tr>
+          <td colspan="6" class="text-center text-muted py-5">Không có sản phẩm nào.</td>
+        </tr>
+        <% } %> <% products.forEach((product) => { %>
+        <tr>
+          <td class="small text-muted"><%= product.id %></td>
+          <td>
+            <% if (product.url_image) { %>
+            <img
+              src="<%= product.url_image %>"
+              alt="<%= product.name %>"
+              class="product-thumb"
+            />
+            <% } else { %>
+            <div class="product-thumb placeholder-thumb">No image</div>
+            <% } %>
+          </td>
+          <td class="fw-semibold"><%= product.name %></td>
+          <td><%= Number(product.price).toLocaleString('vi-VN') %> đ</td>
+          <td><span class="badge text-bg-secondary"><%= product.unit_in_stock %></span></td>
+          <td class="text-end">
+            <a href="/products/<%= product.id %>" class="btn btn-sm btn-outline-primary">Chi tiết</a>
+            <a href="/products/<%= product.id %>/edit" class="btn btn-sm btn-outline-warning">Sửa</a>
+            <form
+              action="/products/<%= product.id %>?_method=DELETE"
+              method="POST"
+              class="d-inline"
+              onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?')"
+            >
+              <button class="btn btn-sm btn-outline-danger">Xóa</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
